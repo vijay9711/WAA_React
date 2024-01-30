@@ -10,14 +10,19 @@ function Dashboard() {
     getPost();
   }, [])
   const addOrEditPost = (event) => {
-    console.log("Post ", event);
+    let id = Math.floor(Math.random() * 100);
+    event.id = id;
+    let postData = [...posts];
+    postData.push(event);
+    setPosts(postData);
+    console.log("Post ", posts);
   }
   const getPost = () => {
     let data = [
       {
         id:1,
         title: "LaLa land",
-        content: "all cartoon character play in concert stage",
+        content: "All cartoon character play in concert stage",
         author: "Akon Jim"
       },
       {
@@ -45,7 +50,7 @@ function Dashboard() {
           )
         })}
       </div>
-      <AddPost addOrEditPost={(event)=>addOrEditPost(event)}/>
+      <AddPost postData={(event)=>addOrEditPost(event)}/>
     </>
   )
 }
