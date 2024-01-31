@@ -27,8 +27,14 @@ function Dashboard() {
       // AddPost.loadData(editData);
     }
   }
-  const editDelete = (event) => {
+  const deletePost = (event) => {
     console.log("delet postt",event);
+    postService.deletePost(event.id).then(res=>{
+      console.log(res);
+      getPost();
+    }).catch(e=>{
+      console.log(e);
+    })
   }
   const getPost = () => {
     postService.getAllPost().then(res=>{
@@ -47,7 +53,7 @@ function Dashboard() {
       <div className="grid grid-cols-4 flex w-screen h-auto items-center justify-center">
         {posts.map((item,i) => {
           return (
-            <Posts key={i} item={item} editPost={(event)=>editPost(event)} editDelete={(event)=>editDelete(event)}/>
+            <Posts key={i} item={item} editPost={(event)=>editPost(event)} deletePost={(event)=>deletePost(event)}/>
           )
         })}
       </div>
