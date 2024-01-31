@@ -13,6 +13,30 @@ export class ApiHelper{
             .then(this.checkResponse)
             .catch(this.handleError)
     }
+    post(uri, data) {
+        return axios.post( uri, data, {
+            // headers:this.getHeaders(),
+            withCredentials: false
+        })
+            .then(this.checkResponse)
+            .catch(this.handleError)
+    }
+    put(uri, data) {
+        return axios.put( uri, data, {
+            // headers:this.getHeaders(),
+            withCredentials: false
+        })
+            .then(this.checkResponse)
+            .catch(this.handleError)
+    }
+    delete(uri) {
+        return axios.delete( uri, {
+            // headers:this.getHeaders(),
+            withCredentials: false
+        })
+            .then(this.checkResponse)
+            .catch(this.handleError)
+    }
     getHeaders(){
         let defaultHeaders = BASE_URL;
         defaultHeaders = {

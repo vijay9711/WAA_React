@@ -1,56 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Posts from "../Post/Posts";
 import AddPost from "../AddPost/AddPost";
+import PostService from "../../service/PostService";
 
 
 function Dashboard() {
+  const childRef = useRef();
+  const postService = new PostService();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     getPost();
   }, [])
   const addOrEditPost = (event) => {
-    let id = Math.floor(Math.random() * 100);
-    event.id = id;
-    let postData = [...posts];
-    postData.push(event);
-    setPosts(postData);
-    console.log("Post ", posts);
+    postService.addPost(event).then((res)=>{
+      console.log(res, " data added ");
+      getPost();
+    }).catch(e=>{
+      console.log(e);
+    })
+  }
+  const editPost = (event) => {
+    console.log("edit post ",event);
+    let editData = posts.find(x => x.id == event.id);
+    if(editData != null){
+      // AddPost.loadData(editData);
+    }
+  }
+  const editDelete = (event) => {
+    console.log("delet postt",event);
   }
   const getPost = () => {
-    let data = [
-      {
-        id:1,
-        title: "LaLa land",
-        content: "All cartoon character play in concert stage",
-        author: "Akon Jim"
-      },
-      {
-        id:2,
-        title: "Marvel",
-        content: "Iron man and Spider-man will visit the park.",
-        author: "Stan Lee"
-      },
-      {
-        id:3,
-        title: "Civil war",
-        content: "Massive fight scene in Florida airport.",
-        author: "Rim Coop"
+    postService.getAllPost().then(res=>{
+      console.log(res, "post");
+      if(res.data){
+        setPosts(res.data);
       }
-    ]
-    setPosts(data);
+    }).catch(e=>{
+      console.log(e);
+    });
+    // setPosts(data);
     console.log(posts)
   }
   return (
     <>
       <div className="grid grid-cols-4 flex w-screen h-auto items-center justify-center">
-        {posts.map(item => {
+        {posts.map((item,i) => {
           return (
-            <Posts item={item} />
+            <Posts key={i} item={item} editPost={(event)=>editPost(event)} editDelete={(event)=>editDelete(event)}/>
           )
         })}
       </div>
-      <AddPost postData={(event)=>addOrEditPost(event)}/>
+      <AddPost postData={(event)=>addOrEditPost(event)}  />
     </>
   )
 }
