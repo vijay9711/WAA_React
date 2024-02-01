@@ -13,7 +13,7 @@ export class PostService{
         return apiHelper.post(api, data);
     }
     updatePost = (data) => {
-        const api = `${url}/posts`;
+        const api = `${url}/posts/${data.id}`;
         return apiHelper.put(api, data);
     }
     deletePost = (id) =>{
