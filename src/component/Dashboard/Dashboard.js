@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, createRef, createContext } from "react";
+import React, { useState, useEffect, useRef, createRef, createContext, useContext } from "react";
 import Posts from "../Post/Posts";
 import AddPost from "../AddPost/AddPost";
 import PostService from "../../service/PostService";
 import User from "../../container/user/user";
 import UserService from "../../service/UserService";
+import { GlobalData } from "../../context/GlobalData";
 
-const ThemeContext = createContext(null);
 const postService = new PostService();
 const userService = new UserService();
 function Dashboard() {
@@ -83,7 +83,7 @@ function Dashboard() {
   }
   return (
     <>
-      <ThemeContext.Provider value={selectEditPost}>
+      <GlobalData.Provider value={selectEditPost}>
         {
           alert ? <div className={" bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"} role="alert">
             <strong className="font-bold">I guess you missed something! </strong>
@@ -117,7 +117,7 @@ function Dashboard() {
           })}
         </div>
         <AddPost ref={childRef} postData={(event) => addOrEditPost(event)} editData={selectEditPost} />
-      </ThemeContext.Provider>
+      </GlobalData.Provider>
     </>
   )
 }

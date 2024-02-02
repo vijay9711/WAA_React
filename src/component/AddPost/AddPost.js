@@ -1,6 +1,5 @@
 import React, { useState, useImperativeHandle, useContext, createContext, forwardRef, createRef } from "react";
-
-const ThemeContext = createContext(null);
+import { GlobalData } from "../../context/GlobalData";
 const AddPost = forwardRef(function ({postData, editData},ref) {
   const addPostRef = createRef();
   const [form, setForm] = useState({
@@ -9,7 +8,8 @@ const AddPost = forwardRef(function ({postData, editData},ref) {
     author:"",
   });
   const [isFormValid, setIsFormValid] = useState(false);
-  const data = useContext(ThemeContext);
+  const data = useContext(GlobalData);
+  console.log(data, " from context");
 
   useImperativeHandle(ref, () => ({
     childMethod(event) {
